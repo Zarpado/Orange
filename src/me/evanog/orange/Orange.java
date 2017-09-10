@@ -4,9 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.evanog.orange.claim.ClaimListeners;
 import me.evanog.orange.cmd.FactionExecutor;
 import me.evanog.orange.data.DataFile;
 import me.evanog.orange.data.LanguageFile;
+import me.evanog.orange.data.SettingsFile;
 import me.evanog.orange.faction.FlatFileFactionManager;
 import me.evanog.orange.utils.ChatUtils;
 import net.milkbowl.vault.chat.Chat;
@@ -32,6 +34,7 @@ public final class Orange extends JavaPlugin {
 		this.registerListeners();
 		this.registerFiles();
 		LanguageFile.setup();
+		SettingsFile.setup();
 		FlatFileFactionManager.getInstance().setupFactions();
 		log("&eRegistered Commands/Listeners.  Now Preparing to load in Factions...", false);
 		log("&asuccessfully loaded.", true);
@@ -49,7 +52,7 @@ public final class Orange extends JavaPlugin {
 	}
 
 	private void registerListeners() {
-
+		Bukkit.getServer().getPluginManager().registerEvents(new ClaimListeners(), this);
 	}
 
 	private void registerFiles() {

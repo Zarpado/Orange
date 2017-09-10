@@ -2,6 +2,7 @@ package me.evanog.orange.faction;
 
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.evanog.orange.faction.types.PlayerFaction;
@@ -63,4 +64,9 @@ public interface FactionManager {
 	 * Returns all the SystemFactions in getFactions();
 	 */
 	public Set<SystemFaction> getSystemFactions();
+	
+	public Faction getFactionAt(Location loc);
+	
+	public Faction getWilderness();
+	
 }

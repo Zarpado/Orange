@@ -16,7 +16,12 @@ public enum SettingsFile {
 
 	CLAIM_WAND_LORE("Claim_Wand_Lore", Arrays.asList("&9Left Click&e block to set point 1", "&9Right Click &eblock to set point 2",
 					"&9Shift-Right Click&e Air to attempt claim purchase",
-					"&9Shift-Left Click&e to clear claim selection"));
+					"&9Shift-Left Click&e to clear claim selection")),
+	CLAIM_PRICE_MULTIPLIER("CLAIM_PRICE_MULTIPLIER", Integer.valueOf(5)),
+	
+	CLAIM_MIN_SIZE("CLAIM_MIN_SIZE", 5),
+	
+	CLAIM_BUFFER("CLAIM_BUFFER", 3);
 
 	private String path;
 	private Object defaultValue;
@@ -24,6 +29,16 @@ public enum SettingsFile {
 	private SettingsFile(String path, Object defaultValue) {
 		this.path = path;
 		this.defaultValue = defaultValue;
+	}
+	
+	public static void setup() {
+		DataFile settings = Orange.getInstance().getSettings();
+		for (SettingsFile factory : SettingsFile.values()) {
+			if (settings.get(factory.getPath()) == null) {
+				settings.set(factory.getPath(), factory.getDefaultValue());
+			}
+		}
+		settings.save();
 	}
 
 	public Object get() {

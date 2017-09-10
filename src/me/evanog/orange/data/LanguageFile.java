@@ -41,7 +41,7 @@ public enum LanguageFile {
 	FACTION_CREATE_MESSAGE("Messages.FACTION_CREATE_MESSAGE",
 			"&eYou have created a faction called &b%faction%&r&e.  Do /f show to view details on your faction."),
 
-	FACTION_WHO_ONLINE_COLOR("Settings.FACITON_WHO_ONLINE_COLOR", "GREEN"),
+	FACTION_WHO_ONLINE_COLOR("Settings.FACTION_WHO_ONLINE_COLOR", "GREEN"),
 
 	NO_FACTION("Messages.NO_FACTION", "&cYou do not have a faction!"),
 
@@ -71,11 +71,19 @@ public enum LanguageFile {
 	FACTION_RENAMED_SERVER_BROADCAST("Messages.FACTION_RENAMED_SERVER_BROADCAST",
 			"&eFaction &7%oldname% &ahas been renamed to &9%newname%&a."),
 
-	CLAIMING_MODE_ENABLED(
-			"&eYou have enabled claiming mode.  You are now claiming land for &c%faction%.  Use your claim wand to select claim points.  To disable claim mode, do /f claim again.",
-			"Messages.CLAIMING_MODE_ENABLED"),
+	CLAIMING_MODE_ENABLED("Messages.CLAIMING_MODE_ENABLED",
+			"&eYou have enabled claiming mode.  You are now claiming land for &c%faction%.  Use your claim wand to select claim points.  To disable claim mode, do /f claim again."),
 
-	CLAIM_MODE_DISABLED("&cClaim mode has been disabled!", "Messages.CLAIM_MODE_DISABLED");
+	CLAIM_MODE_DISABLED("Messages.CLAIM_MODE_DISABLED", "&cClaim mode has been disabled!"),
+	
+	OVERWORLD_ONLY("Messages.OVERWORLD_ONLY", "&cYou can only claim land in the overworld."),
+	
+	POINT_ONE_SET("Messages.POINT_ONE_SET", "&AClaim point 1 set at &8[&e%cords%&8]&a."),
+	POINT_TWO_SET("Messages.POINT_TWO_SET", "&AClaim point 2 set at &8[&e%cords%&8]&r&a."),
+	
+	CLAIM_PRICE_MSG("Messages.CLAIM_PRICE_MSG", "&eThis claim will cost &a&n%price%&r&e. "),
+	
+	SET_POINTS("Messages.SET_POINTS", "&cPlease set both points before attempting to claim!");
 
 	private String path;
 	private Object defaultValue;
@@ -89,11 +97,12 @@ public enum LanguageFile {
 		DataFile language = Orange.getInstance().getLanguage();
 		language.set("test", "hey");
 		language.save();
+
 		for (LanguageFile factory : LanguageFile.values()) {
-			language.getConfig().addDefault(factory.getPath(), factory.getDefaultValue());
-			language.save();
+			if (language.get(factory.getPath()) == null) {
+				language.set(factory.getPath(), factory.getDefaultValue());
+			}
 		}
-		language.getConfig().options().copyDefaults(true);
 		language.save();
 	}
 

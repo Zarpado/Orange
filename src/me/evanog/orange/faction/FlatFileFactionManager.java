@@ -4,18 +4,23 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import me.evanog.orange.Orange;
+import me.evanog.orange.Orange; 
 import me.evanog.orange.faction.types.PlayerFaction;
 import me.evanog.orange.faction.types.SystemFaction;
+import me.evanog.orange.faction.types.Wilderness;
 
 public class FlatFileFactionManager implements FactionManager {
 
 	private static Set<Faction> factions = new HashSet<>();
 	
 	private static FlatFileFactionManager instance = new FlatFileFactionManager();
+	//private Faction wilderness = new Wilderness();
 
+	private static Wilderness wilderness = new Wilderness();
+	
 	private FlatFileFactionManager() {
 		//prevent instantiation
 	}
@@ -127,6 +132,24 @@ public class FlatFileFactionManager implements FactionManager {
 
 	public static FlatFileFactionManager getInstance() {
 		return instance; 
+	}
+
+	@Override
+	public Faction getFactionAt(Location loc) {
+		for (Faction fac : factions) {
+			for (me.evanog.orange.claim.Claim claim : fac.getClaims()) {
+				if (claim.contains(loc)) {
+					return claim.getFaction();
+				}
+			}
+		}
+		
+		return this.getWilderness();
+	}
+
+	@Override
+	public Faction getWilderness() {
+		return wilderness;
 	}
 	
 	

@@ -1,0 +1,8 @@
+name: Orange
+author: EvanOG
+main: me.evanog.orange.Orange
+description: A Much improved remake of the popular HCF plugin Mango
+version: 1.0
+commands:
+  factions:
+    aliases: [f,ff]
